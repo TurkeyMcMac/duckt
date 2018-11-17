@@ -104,14 +104,17 @@ void print_help(const char *prog_name, FILE *to)
 		"  -c <closed> Specify the message format with mouth closed.\n"
 		"  -m <delay>  Specify the delay in milliseconds.\n"
 		"  -A          Automatically decide whether or not to animate. "
-		              "This option is on by default.\n"
+		              "This option is on\n"
+		"              by default.\n"
 		"  -N          Never animate output.\n"
 		"  -F          Force output animation. This does weird stuff "
-		              "if the output is piped.\n"
+		              "if the output is\n"
+		"              piped.\n"
 		"  -h          Display this help information.\n"
 		"  -v          Display version information.\n"
 		"Formats refer to strings with exactly one part being '%%s'. "
-		"This part will become the message displayed.\n",
+		"This part will become\n"
+		"the message displayed.\n",
 		prog_name);
 }
 
