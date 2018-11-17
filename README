@@ -1,0 +1,21 @@
+(^)= -{DUCKT}
+
+This is a program similar to some others which I have written, except that is
+more polished and customizeable. Namely, this one supports UTF-8 and allows for
+custom ducks.
+
+(^)= -{CUSTOM DUCKS}
+
+These can be provided using the -o and -c options to specify two frames: the
+(o)pen-mouthed frame and the (c)lose-mouthed frame. Each frame template must
+contain "TEXT" somewhere, specifying where speech should go.
+
+An example of custom frames, using a smiley face speaker rather than a duck:
+
+$ duckt -o '😃 ~(TEXT)' -c '😐 ~(TEXT)' 'Hello, world!'
+(the animation plays)
+😃 ~(Hello, world!)
+
+(^)= -{MORE INFORMATION}
+
+More information can be found by using the -h option.
