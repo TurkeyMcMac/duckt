@@ -6,13 +6,13 @@
 
 #define VERSION "0.0.1"
 
-void verify_format(char *format, const char *descriptor,
+static void verify_format(char *format, const char *descriptor,
 	const char *prog_name);
-void print_help(const char *prog_name, FILE *to);
-void print_version(const char *prog_name, FILE *to);
-void print_animated(const char *open_mouth, const char *closed_mouth,
+static void print_help(const char *prog_name, FILE *to);
+static void print_version(const char *prog_name, FILE *to);
+static void print_animated(const char *open_mouth, const char *closed_mouth,
 	const char *message, int delay);
-void print_unanimated(const char *open_mouth, const char *message);
+static void print_unanimated(const char *open_mouth, const char *message);
 int main(int argc, char *argv[])
 {
 	char *prog_name = argv[0];
@@ -78,7 +78,7 @@ int main(int argc, char *argv[])
 	}
 }
 
-void verify_format(char *format, const char *descriptor,
+static void verify_format(char *format, const char *descriptor,
 	const char *prog_name)
 {
 	static const char original[] = "TEXT";
@@ -94,7 +94,7 @@ void verify_format(char *format, const char *descriptor,
 	memcpy(parameter, translation, 4);
 }
 
-void print_help(const char *prog_name, FILE *to)
+static void print_help(const char *prog_name, FILE *to)
 {
 	fprintf(to,
 		"Usage: %s [options] [message]\n"
@@ -118,7 +118,7 @@ void print_help(const char *prog_name, FILE *to)
 		prog_name);
 }
 
-void print_version(const char *prog_name, FILE *to)
+static void print_version(const char *prog_name, FILE *to)
 {
 	fprintf(to, "%s " VERSION "\n", prog_name);
 }
@@ -141,7 +141,7 @@ static void print_step(const char *format, const char *message, int delay,
 	usleep(delay);
 	printf("\r");
 }
-void print_animated(const char *open_mouth, const char *closed_mouth,
+static void print_animated(const char *open_mouth, const char *closed_mouth,
 	const char *message, int delay)
 {
 	size_t length = strlen(message), extent = 0;
@@ -152,7 +152,7 @@ void print_animated(const char *open_mouth, const char *closed_mouth,
 	printf("\n");
 }
 
-void print_unanimated(const char *open_mouth, const char *message)
+static void print_unanimated(const char *open_mouth, const char *message)
 {
 	printf(open_mouth, strlen(message), message);
 	printf("\n");
