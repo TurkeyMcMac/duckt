@@ -4,7 +4,7 @@
 #include <string.h>
 #include <unistd.h>
 
-#define VERSION "0.0.4"
+#define VERSION "0.1.4"
 
 static char *verify_format(char *format, const char *descriptor,
 	const char *prog_name);
@@ -84,11 +84,34 @@ int main(int argc, char *argv[])
 	}
 }
 
+static char *escape(char *format)
+{
+	char *last_found = format;
+	if ((format = strchr(format, '%'))) {
+		size_t original_length = strlen(last_found);
+		char *escaped = malloc(original_length * 2 + 1);
+		size_t writing = 0;
+		do {
+			size_t segment = (size_t)(format - last_found);
+			++format;
+			memcpy(escaped + writing, last_found, segment);
+			writing += segment;
+			memcpy(escaped + writing, "%%", 2);
+			writing += 2;
+			last_found = format;
+		} while ((format = strchr(format, '%')));
+		strcpy(escaped + writing, last_found);
+		return escaped;
+	} else {
+		return last_found;
+	}
+}
 static char *verify_format(char *format, const char *descriptor,
 	const char *prog_name)
 {
 	static const char original[] = "TEXT";
 	static const char translation[] = "%.*s";
+	format = escape(format);
 	char *parameter = strstr(format, original);
 	if (!parameter) {
 		fprintf(stderr, "%s: the %s format must have one "
