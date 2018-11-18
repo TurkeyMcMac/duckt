@@ -4,7 +4,7 @@
 #include <string.h>
 #include <unistd.h>
 
-#define VERSION "0.1.4"
+#define VERSION "0.1.5"
 
 static char *verify_format(char *format, const char *descriptor,
 	const char *prog_name);
