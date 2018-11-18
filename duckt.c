@@ -147,6 +147,7 @@ static void print_step(const char *format, const char *message, int delay,
 	printf("\e[u");
 	printf(format, extent, message);
 	fflush(stdout);
+	printf("\r");
 	usleep(delay);
 }
 static void print_animated(const char *open_mouth, const char *closed_mouth,
