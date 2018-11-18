@@ -186,7 +186,7 @@ static void print_animated(const char *open_mouth, const char *closed_mouth,
 {
 	size_t length = strlen(message), extent = 0;
 	if (length == 0) {
-		print_unanimated(open_mouth, message);
+		print_unanimated(closed_mouth, message);
 		return;
 	}
 	printf("\e[s");
