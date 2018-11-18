@@ -89,16 +89,18 @@ int main(int argc, char *argv[])
 /* Escape all occurrences of '%' in a string so that it can be as a format. */
 static char *escape(char *format)
 {
-	char *last_found = format;
+	char *unescaped = format;
 	if ((format = strchr(format, '%'))) {
-		size_t unescaped_length = strlen(last_found);
+		char *last_found = unescaped;
+		size_t unescaped_length = strlen(unescaped);
 		/* Maximum length is 2x the original (if every char is '%'): */
 		char *escaped = malloc(unescaped_length * 2 + 1);
 		/* The index of escaped being written to: */
 		size_t writing = 0;
+		/* The length of the preserved segment: */
+		size_t segment;
 		do {
-			/* The length of the preserved segment: */
-			size_t segment = (size_t)(format - last_found);
+			segment = (size_t)(format - last_found);
 			++format;
 			memcpy(escaped + writing, last_found, segment);
 			writing += segment;
@@ -107,10 +109,15 @@ static char *escape(char *format)
 			last_found = format;
 		} while ((format = strchr(format, '%')));
 		/* Copy final '%'-free segment: */
-		strcpy(escaped + writing, last_found);
+		segment = (size_t)(unescaped - last_found) + unescaped_length;
+		memcpy(escaped + writing, last_found, segment);
+		/* Shrink the allocated space down to a reasonable size: */
+		size_t escaped_length = writing + segment;
+		escaped = realloc(escaped, escaped_length + 1);
+		escaped[escaped_length] = '\0';
 		return escaped;
 	} else {
-		return last_found;
+		return unescaped;
 	}
 }
 static char *verify_format(char *format, const char *descriptor,
