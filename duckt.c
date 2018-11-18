@@ -136,15 +136,16 @@ static size_t advance(const char *message, size_t length, size_t extent)
 static void print_step(const char *format, const char *message, int delay,
 	size_t extent)
 {
+	printf("\e[u");
 	printf(format, extent, message);
 	fflush(stdout);
 	usleep(delay);
-	printf("\r");
 }
 static void print_animated(const char *open_mouth, const char *closed_mouth,
 	const char *message, int delay)
 {
 	size_t length = strlen(message), extent = 0;
+	printf("\e[s");
 	while ((extent += advance(message, length, extent)) <= length) {
 		print_step(open_mouth, message, delay, extent);
 		print_step(closed_mouth, message, delay, extent);
