@@ -4,7 +4,7 @@
 #include <string.h>
 #include <unistd.h>
 
-#define VERSION "0.0.3"
+#define VERSION "0.0.4"
 
 static char *verify_format(char *format, const char *descriptor,
 	const char *prog_name);
@@ -90,8 +90,8 @@ static char *verify_format(char *format, const char *descriptor,
 	static const char original[] = "TEXT";
 	static const char translation[] = "%.*s";
 	char *parameter = strstr(format, original);
-	if (!parameter || strstr(parameter + 4, original)) {
-		fprintf(stderr, "%s: the %s format must have exactly one "
+	if (!parameter) {
+		fprintf(stderr, "%s: the %s format must have one "
 				"string parameter (TEXT).\n",
 			prog_name, descriptor);
 		print_help(prog_name, stderr);
