@@ -6,7 +6,7 @@
 
 #define VERSION "0.0.3"
 
-static void verify_format(char *format, const char *descriptor,
+static char *verify_format(char *format, const char *descriptor,
 	const char *prog_name);
 static void print_help(const char *prog_name, FILE *to);
 static void print_version(const char *prog_name, FILE *to);
@@ -35,12 +35,12 @@ int main(int argc, char *argv[])
 	while ((opt = getopt(argc, argv, "o:c:m:ANFhv")) != -1) {
 		switch (opt) {
 		case 'o':
-			verify_format(optarg, "open-mouth", prog_name);
-			open_mouth = optarg;
+			open_mouth = verify_format(optarg, "open-mouth",
+				prog_name);
 			break;
 		case 'c':
-			verify_format(optarg, "closed-mouth", prog_name);
-			closed_mouth = optarg;
+			closed_mouth = verify_format(optarg, "closed-mouth",
+				prog_name);
 			break;
 		case 'm':
 			delay = atoi(optarg);
@@ -84,7 +84,7 @@ int main(int argc, char *argv[])
 	}
 }
 
-static void verify_format(char *format, const char *descriptor,
+static char *verify_format(char *format, const char *descriptor,
 	const char *prog_name)
 {
 	static const char original[] = "TEXT";
@@ -98,6 +98,7 @@ static void verify_format(char *format, const char *descriptor,
 		exit(EXIT_FAILURE);
 	}
 	memcpy(parameter, translation, 4);
+	return format;
 }
 
 static void print_help(const char *prog_name, FILE *to)
