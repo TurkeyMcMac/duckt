@@ -10,8 +10,11 @@ static void verify_format(char *format, const char *descriptor,
 	const char *prog_name);
 static void print_help(const char *prog_name, FILE *to);
 static void print_version(const char *prog_name, FILE *to);
+/* Animate a duck with the given frames saying the given message, waiting a
+ * given delay between each frame. */
 static void print_animated(const char *open_mouth, const char *closed_mouth,
 	const char *message, int delay);
+/* Instantly print the duck saying the complete message, open-mouthed. */
 static void print_unanimated(const char *open_mouth, const char *message);
 int main(int argc, char *argv[])
 {
@@ -20,8 +23,11 @@ int main(int argc, char *argv[])
 	const char *closed_mouth = "(^)- -{%.*s}";
 	char *message;
 	enum {
+		/* Decide whether to animate based on isatty. */
 		ANIMATION_AUTO,
+		/* use the print_unanimated function. */
 		ANIMATION_NONE,
+		/* use the print_animated function. */
 		ANIMATION_FORCE
 	} animation = ANIMATION_AUTO;
 	int delay = 100000;
@@ -123,6 +129,7 @@ static void print_version(const char *prog_name, FILE *to)
 	fprintf(to, "%s " VERSION "\n", prog_name);
 }
 
+/* Move forward one UTF-8 character, returning the delta. */
 static size_t advance(const char *message, size_t length, size_t extent)
 {
 	if (message[extent] >= 0) {
@@ -133,6 +140,7 @@ static size_t advance(const char *message, size_t length, size_t extent)
 	size_t char_size = __builtin_clz(~char_bits);
 	return char_size;
 }
+/* Print a frame and wait. */
 static void print_step(const char *format, const char *message, int delay,
 	size_t extent)
 {
