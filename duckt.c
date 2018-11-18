@@ -67,7 +67,9 @@ int main(int argc, char *argv[])
 	}
 	message = argv[optind];
 	if (!message) {
-		message = "";
+		fprintf(stderr, "%s: No message found.\n", prog_name);
+		print_help(prog_name, stderr);
+		return EXIT_FAILURE;
 	}
 	if (animation == ANIMATION_AUTO) {
 		if (isatty(STDOUT_FILENO)) {
@@ -132,7 +134,7 @@ static char *verify_format(char *format, const char *descriptor,
 static void print_help(const char *prog_name, FILE *to)
 {
 	fprintf(to,
-		"Usage: %s [options] [message]\n"
+		"Usage: %s [options] message\n"
 		"Options:\n"
 		"  -o <open>   Specify the message format when the mouth is "
 		              "open.\n"
