@@ -112,9 +112,9 @@ static void print_help(const char *prog_name, FILE *to)
 		"              piped.\n"
 		"  -h          Display this help information.\n"
 		"  -v          Display version information.\n"
-		"Formats refer to strings with exactly one part being '%%s'. "
-		"This part will become\n"
-		"the message displayed.\n",
+		"Formats refer to strings with exactly one part being 'TEXT'. "
+		"This part will\nbecome the message displayed. Example usage:\n"
+		"duckt -o ':-O ~(TEXT)' -c ':-| ~(TEXT)'.\n",
 		prog_name);
 }
 
