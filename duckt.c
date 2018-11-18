@@ -84,14 +84,18 @@ int main(int argc, char *argv[])
 	}
 }
 
+/* Escape all occurrences of '%' in a string so that it can be as a format. */
 static char *escape(char *format)
 {
 	char *last_found = format;
 	if ((format = strchr(format, '%'))) {
-		size_t original_length = strlen(last_found);
-		char *escaped = malloc(original_length * 2 + 1);
+		size_t unescaped_length = strlen(last_found);
+		/* Maximum length is 2x the original (if every char is '%'): */
+		char *escaped = malloc(unescaped_length * 2 + 1);
+		/* The index of escaped being written to: */
 		size_t writing = 0;
 		do {
+			/* The length of the preserved segment: */
 			size_t segment = (size_t)(format - last_found);
 			++format;
 			memcpy(escaped + writing, last_found, segment);
@@ -100,6 +104,7 @@ static char *escape(char *format)
 			writing += 2;
 			last_found = format;
 		} while ((format = strchr(format, '%')));
+		/* Copy final '%'-free segment: */
 		strcpy(escaped + writing, last_found);
 		return escaped;
 	} else {
