@@ -185,6 +185,10 @@ static void print_animated(const char *open_mouth, const char *closed_mouth,
 	const char *message, int delay)
 {
 	size_t length = strlen(message), extent = 0;
+	if (length == 0) {
+		print_unanimated(open_mouth, message);
+		return;
+	}
 	printf("\e[s");
 	while ((extent += advance(message, length, extent)) <= length) {
 		print_step(open_mouth, message, delay, extent);
